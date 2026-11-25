@@ -1,0 +1,125 @@
+@import "tailwindcss";
+
+@theme {
+  --font-pixel: "Silkscreen", ui-monospace, monospace;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --color-paper: #ecebe8;
+  --color-paper-2: #e2e1dd;
+  --color-ink: #0e0e0e;
+  --color-mute: #6b6a66;
+  --color-rule: #c8c7c2;
+
+  --color-sea: #0d2c74;
+  --color-sea-deep: #081c4e;
+  --color-sea-line: #1d3f93;
+
+  /* container palette, sampled from the reference footage */
+  --color-c-navy: #2c3aa0;
+  --color-c-orange: #ec8b34;
+  --color-c-red: #d93a3c;
+  --color-c-green: #3e9c4d;
+  --color-c-white: #e9e8e3;
+  --color-c-pink: #e35b92;
+  --color-c-blue: #3071d9;
+}
+
+html {
+  scroll-behavior: smooth;
+  background: var(--color-paper);
+}
+
+body {
+  margin: 0;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-mono);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--color-ink);
+  color: var(--color-paper);
+}
+
+/* Shipping-container ribs + light from above */
+.container-box {
+  background-image:
+    repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.2) 0 1px, transparent 1px 4px),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.22), rgba(0, 0, 0, 0.18));
+  box-shadow:
+    inset 0 0 0 1px rgba(0, 0, 0, 0.35),
+    0 2px 0 rgba(0, 0, 0, 0.35);
+}
+
+/* The sea under each doctor's deck */
+.sea {
+  background:
+    radial-gradient(120% 80% at 15% 20%, rgba(255, 255, 255, 0.07), transparent 60%),
+    radial-gradient(90% 70% at 85% 90%, rgba(0, 0, 0, 0.25), transparent 60%),
+    repeating-linear-gradient(170deg, rgba(255, 255, 255, 0.025) 0 2px, transparent 2px 9px),
+    var(--color-sea);
+}
+
+.deck {
+  background:
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px 22px),
+    #22314f;
+  box-shadow:
+    inset 0 0 0 2px #3a4b6e,
+    0 0 0 3px rgba(255, 255, 255, 0.08),
+    0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+/* Scanline rendering used for the hero graphic */
+.scanlines {
+  background: repeating-linear-gradient(180deg, var(--color-ink) 0 1.6px, transparent 1.6px 4.2px);
+}
+
+.pixel-shadow {
+  box-shadow: 4px 4px 0 var(--color-ink);
+}
+
+.blink {
+  animation: blink 1s steps(2, start) infinite;
+}
+@keyframes blink {
+  to {
+    visibility: hidden;
+  }
+}
+
+.caption-in {
+  animation: caption-in 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+@keyframes caption-in {
+  from {
+    transform: translateY(6px);
+    opacity: 0;
+  }
+}
+
+.wake {
+  animation: wake 6s linear infinite;
+}
+@keyframes wake {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 0 -180px;
+  }
+}
+
+/* Thin scrollbars inside panels */
+.thin-scroll::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.thin-scroll::-webkit-scrollbar-thumb {
+  background: var(--color-rule);
+}
+
+input[type="number"]::-webkit-inner-spin-button {
+  opacity: 0.4;
+}
