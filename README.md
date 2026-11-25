@@ -94,15 +94,38 @@ Time in clinic = actual arrival → consultation start, for routine patients.
 
 ## The app
 
-- **Control tower** — each doctor's queue is drawn as a ship deck. Every container is a booked slot, coloured by where
-  that patient physically is (at home, told to leave, on the way, in the waiting room, with the doctor, done).
-  Change the declared call rate, announce a delay, insert an emergency.
-- **Patient view** — a phone showing when to leave home, live queue position, the predicted-start band (p10–p90),
-  slot-exchange opt-in, notifications, and "your wait today vs with TARMAC".
-- **Metrics** — waiting-room headcount through the day for both policies, and the full comparison table.
-- **Event log** — every advisory, compression and swap, with its reason.
-- **Scripted demo** — one button, identical every replay: a normal morning, a doctor running late, two silent
-  no-shows triggering compression, one emergency, and two patient swaps, ending on the metrics comparison.
+TARMAC is a working clinic product, with the research simulator in its own tab.
+
+| Screen | For | What it does |
+|---|---|---|
+| **Patient app** | patients | Book a visit, get a live "leave home at 10:40" card that updates when the day shifts, see your place in line, tap "I'm leaving" / "I've arrived", and opt into slot swaps ("I'd like earlier" / "I can come later"). |
+| **Reception desk** | front desk | Today's list with filters and search. Check in, add walk-ins and emergencies, mark no-shows or cancellations (compression refills the gap instantly), see patients who aren't responding to their leave-now ping, and see what the system just did. |
+| **Doctor console** | doctors | Big "Call next" / "Finish & call next" buttons, a protected-order hint ("token 12 is 4 min away"), break / running-late controls, and today's stats. |
+| **Waiting-room TV** | waiting area | Now serving, up next and room for every doctor, full-screen. |
+| **Data** | admins | CSV export of every timestamped visit and event, per-doctor consultation models calibrated on real visits, and a no-show model fitted on a real appointment history (see below). |
+| **How it works** | judges | The deterministic simulator: ship-deck queue view, TARMAC vs baseline metrics, event log, and the one-button scripted demo. |
+
+**Multi-screen, offline.** All screens share one clinic state that is stored in the browser and synced live between tabs and windows
+(BroadcastChannel + localStorage). Open the four views in four windows on one laptop and they behave like four devices. One tab is
+elected (Web Locks API) to run the clinic clock: re-prediction, advisories and swaps.
+
+**Demo day vs real day.** From the clock menu (top right):
+- *Demo day* loads 72 sample bookings on a fast clock (60–300×). An optional autopilot plays patients, doctors and reception, so you can
+  watch leave-now pings, compressions, swaps and model re-fits happen. Every manual action still works.
+- *Empty day, real clock* is for real use. Real bookings, check-ins, calls and finishes drive the same five algorithms.
+
+## Data — what is real?
+
+| Data | Real or synthetic |
+|---|---|
+| OPD waiting figures that motivate the problem (260.4 / 242.8 / 12.8 min) | **Real**, published study (cited above) |
+| Live-mode visits: bookings, leave-now, check-in, call, finish times | **Real**, recorded as you use the app; exported from the Data page |
+| Doctors' consultation-time models in live mode | **Calibrated on real visits**: a historical prior (worth 10 visits) blended with each consultation finished today, re-fitted every 5 visits |
+| No-show model | **Real** once you import an appointment history. Built for the public *Medical Appointment No Shows* dataset (Kaggle, ~110k appointments, `joniarroba/noshowappointments`) or your own clinic export. It reports rates by booking lead time, SMS reminder and age; the simulator's random days then use the real no-show rate. |
+| Simulator patients, travel times, consultation durations (How-it-works tab) | **Synthetic**, from a seeded generator |
+
+The fastest way to get real data is to run a clinic session on the real clock and export the visits CSV. Import the Kaggle file on the
+Data page for real no-show behaviour (download it from Kaggle with your own account; it is processed entirely in the browser).
 
 ## Determinism
 
@@ -118,10 +141,23 @@ Requires Node 18+.
 ```bash
 npm install
 npm run dev          # app at http://localhost:5173
-npm test             # Vitest suite (52 tests)
+npm test             # Vitest suite (61 tests)
 npm run compare 42   # print the TARMAC vs baseline table for a seed
-npm run build        # static site in dist/ — deployable to GitHub Pages, works offline
+npm run build        # static site in dist/ — works offline
 ```
+
+### Deploy to Vercel
+
+No backend is needed — TARMAC is a static site.
+
+1. Push this repo to GitHub (done).
+2. On vercel.com: **Add New → Project → Import** `tarmac`. Vercel detects Vite automatically
+   (build `npm run build`, output `dist`). Click **Deploy**.
+
+Or from a terminal: `npx vercel` then `npx vercel --prod`.
+
+Each browser keeps its own clinic state. For true multi-device use (patients' own phones and a reception PC sharing one
+clinic), the store in `src/ui/live/store.ts` is the only piece to swap for a hosted database (e.g. Supabase or Vercel KV).
 
 No backend, no database, no API keys, no network calls. Fonts are bundled locally.
 
@@ -147,9 +183,11 @@ tests/             Vitest suites
 
 ## Honest limitations
 
-- **Synthetic data.** Patients, travel times and consultation durations are generated, not real. The consultation
+- **Synthetic simulator data.** In the How-it-works simulator, patients, travel times and consultation durations are generated, not real. The consultation
   models are fitted to synthetic historical visits. The study figures above motivate the problem; they are not used
   as model inputs.
+- **No server yet.** Clinic state lives in one browser and syncs between its tabs and windows. Cross-device sync needs a hosted
+  store (see Deploy). There is no login, and SMS is not wired up; patients see updates in the app.
 - **Single-clinic model.** One OPD with independent doctor queues. No shared resources (labs, pharmacy, imaging),
   no multi-department journeys, no patient re-visits within the day.
 - **Behaviour model is simple.** Patients follow advisories with a small departure delay; a configurable fraction
