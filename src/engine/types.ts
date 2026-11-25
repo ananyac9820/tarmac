@@ -131,6 +131,9 @@ export type EventType =
   | 'LATE_ARRIVAL_BYPASS'
   | 'GAP_FILL'
   | 'EXCHANGE_OPT_IN'
+  | 'BOOKED'
+  | 'CHECKED_IN'
+  | 'MODEL_UPDATED'
   | 'DAY_END';
 
 export interface EngineEvent {
