@@ -8,6 +8,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   TarmacSimulation,
   compareRuns,
+  DEFAULT_SCENARIO,
   demoScenario,
   generateClinicDay,
   runBaseline,
@@ -19,6 +20,7 @@ import {
   type ScheduledCommand,
   type TarmacConfig,
 } from '../engine';
+import { read as readClinic } from './live/store';
 
 export type Mode = 'DEMO' | 'RANDOM';
 
@@ -36,7 +38,10 @@ function makeSetup(id: number, mode: Mode, seed: number): Setup {
     const d = demoScenario();
     return { id, mode, seed: d.config.seed, day: d.day, config: d.config, scripted: d.commands };
   }
-  return { id, mode, seed, day: generateClinicDay(seed), config: withConfig({ seed }), scripted: [] };
+  // Random days use the REAL no-show rate if an appointment history was imported (Data page).
+  const ns = readClinic().noShow;
+  const scenario = ns ? { ...DEFAULT_SCENARIO, noShowRate: ns.rate } : DEFAULT_SCENARIO;
+  return { id, mode, seed, day: generateClinicDay(seed, scenario), config: withConfig({ seed }), scripted: [] };
 }
 
 export const SPEEDS = [1, 3, 6, 12, 30] as const;

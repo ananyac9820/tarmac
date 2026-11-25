@@ -18,7 +18,7 @@ export function ControlBar({ api, onRunDemo }: { api: SimApi; onRunDemo: () => v
   const switchMode = (m: Mode) => reset(m, m === 'DEMO' ? 42 : Number(seedText) || 42);
 
   return (
-    <div className="z-40 border-b border-ink bg-paper/95 backdrop-blur md:sticky md:top-0">
+    <div className="z-40 border-b border-ink bg-paper/95 backdrop-blur md:sticky md:top-14">
       <div className="mx-auto flex max-w-[1400px] flex-wrap items-center gap-x-4 gap-y-2 px-4 py-2.5 sm:px-8">
         {/* scenario */}
         <div className="flex border border-ink">

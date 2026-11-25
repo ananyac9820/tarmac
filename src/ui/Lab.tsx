@@ -7,14 +7,6 @@ import { ScanPlane } from './components/ScanPlane';
 import { Tower } from './components/Tower';
 import { useSimulation } from './useSimulation';
 
-function Logo() {
-  return (
-    <svg viewBox="0 0 8 8" className="h-7 w-7" aria-label="TARMAC">
-      <path d="M0 0h3v3H0zM5 0h3v3H5zM3 3h2v2H3zM0 5h3v3H0zM5 5h3v3H5z" />
-    </svg>
-  );
-}
-
 function Section({ id, n, title, kicker, children }: { id: string; n: string; title: string; kicker: string; children: ReactNode }) {
   return (
     <section id={id} className="scroll-mt-28 border-t border-ink">
@@ -60,7 +52,7 @@ const MECHANISMS = [
   },
 ];
 
-export function App() {
+export function Lab() {
   const api = useSimulation();
   const [selected, setSelected] = useState<string | null>(null);
 
@@ -95,43 +87,25 @@ export function App() {
 
   return (
     <div className="min-h-screen">
-      {/* top nav */}
-      <header className="mx-auto flex max-w-[1400px] items-center justify-between px-4 pt-6 sm:px-8">
-        <a href="#top" className="flex items-center gap-3">
-          <Logo />
-          <span className="font-pixel text-sm tracking-widest">TARMAC</span>
-        </a>
-        <nav className="hidden gap-8 text-sm md:flex">
-          <a href="#tower" className="hover:underline">Tower</a>
-          <a href="#patient" className="hover:underline">Patient</a>
-          <a href="#metrics" className="hover:underline">Metrics</a>
-          <a href="#log" className="hover:underline">Event log</a>
-          <a href="#how" className="hover:underline">How it works</a>
-        </nav>
-      </header>
-
       {/* hero */}
       <section id="top" className="mx-auto grid max-w-[1400px] items-center gap-6 px-4 pb-10 pt-10 sm:px-8 lg:grid-cols-[1.05fr_1fr]">
         <div>
-          <h1 className="font-pixel text-[64px] font-bold uppercase leading-[0.9] tracking-tight sm:text-[104px] xl:text-[124px]">
-            Tarmac
-          </h1>
-          <div className="mt-3 font-pixel text-xl uppercase leading-tight sm:text-3xl">
-            Clinic traffic
+          <div className="font-pixel text-[11px] uppercase tracking-wider text-mute">For judges &amp; the curious</div>
+          <h1 className="mt-3 font-pixel text-[44px] font-bold uppercase leading-[0.95] tracking-tight sm:text-[72px]">
+            How it
             <br />
-            control
-          </div>
+            works
+          </h1>
           <p className="mt-8 max-w-[460px] text-[15px] leading-relaxed">
-            A clinic waiting room is an airborne holding stack. TARMAC borrows four mechanisms air-traffic control has used for decades
-            and holds patients at home — not in the corridor.
+            This is the engine behind the app: a deterministic simulator that replays a whole clinic day under TARMAC and under today’s “everyone come at 9”, over the identical patients — and shows every decision it makes.
           </p>
           <div className="mt-8 flex flex-wrap items-center gap-6">
             <button onClick={runDemo} className="h-11 bg-ink px-6 text-sm text-paper hover:bg-ink/85">
               ▶ Run scripted demo
             </button>
-            <a href="#how" className="text-sm hover:underline">
-              See how it works&nbsp;&nbsp;›
-            </a>
+            <button onClick={() => document.getElementById('how')?.scrollIntoView({ behavior: 'smooth' })} className="text-sm hover:underline">
+              The five mechanisms&nbsp;&nbsp;›
+            </button>
           </div>
         </div>
         <ScanPlane />
