@@ -8,3 +8,6 @@ Thumbs.db
 .claude/
 .env
 .env.*
+
+.vercel
+.env*

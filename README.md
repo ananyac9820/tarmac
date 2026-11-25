@@ -1,6 +1,8 @@
 # TARMAC — Air-Traffic-Control scheduling for outpatient clinics
 
 > HackKumbh 2026 (YCCE Nagpur) · Healthcare · Problem Statement 1: *Smart Queue & Appointment Management System*
+>
+> **Live app:** https://tarmac-eight.vercel.app
 
 **A clinic waiting room is an airborne holding stack.** Patients circle for hours, burning their day, while the
 runway (the doctor) handles one at a time. Air traffic control solved this decades ago with *ground holding*:
