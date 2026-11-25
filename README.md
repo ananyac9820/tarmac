@@ -28,7 +28,7 @@ tertiary teaching hospital in North India: a mixed-method study.* Int J Communit
 
 The study's arrival-to-consultation timings are patient-reported. The figures are quoted as reported in its abstract.
 
-More than 95% of a patient's visit is spent waiting. That's the holding stack TARMAC is designed to shorten.
+Over 93% of the journey (242.8 of 260.4 minutes) is spent waiting to be called. That's the holding stack TARMAC is designed to shorten.
 
 ---
 
