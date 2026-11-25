@@ -13,17 +13,20 @@ emergencies fair. It is a fully client-side web app with a deterministic simulat
 
 ## The problem, in one number
 
-A stage-wise OPD patient-flow study at a large government tertiary-care teaching hospital in India (2,200+ beds,
-~150 OPDs) measured:
+A stage-wise OPD patient-flow study at a government tertiary teaching hospital in North India (255 OPD patients,
+May–June 2026) reported:
 
-| Stage | Minutes |
+| Measure | Minutes |
 |---|---:|
 | Mean total patient journey, arrival → consultation | **260.4** |
-| …of which waiting from arrival to being called | **242.8** |
-| …of which the consultation itself | **12.8** (< 5% of the total) |
+| Waiting from arrival to being called by the doctor (the primary bottleneck) | **242.8** |
+| The consultation itself | **12.8** (under 5% of total time) |
 
-Source: *Navigating Patient Flow: Assessing the Bottlenecks in Out-Patient Services in a Tertiary Care Hospital in
-India* — [record](https://library.kab.ac.ug/Record/doaj-art-7565c63ab64d4056bc3a7b9fbf20c1ad/Details).
+Source: Kumari K. *Stage-wise analysis of outpatient department patient flow and waiting time at a government
+tertiary teaching hospital in North India: a mixed-method study.* Int J Community Med Public Health.
+2026;13(11):6667–6671. doi:[10.18203/2394-6040.ijcmph20264093](https://doi.org/10.18203/2394-6040.ijcmph20264093)
+
+The study's arrival-to-consultation timings are patient-reported. The figures are quoted as reported in its abstract.
 
 More than 95% of a patient's visit is spent waiting. That's the holding stack TARMAC is designed to shorten.
 

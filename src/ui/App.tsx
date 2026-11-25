@@ -141,9 +141,9 @@ export function App() {
       <div className="border-t border-ink">
         <div className="mx-auto grid max-w-[1400px] grid-cols-1 divide-y divide-rule px-4 sm:grid-cols-3 sm:divide-x sm:divide-y-0 sm:px-8">
           {[
-            ['260.4 min', 'mean patient journey, arrival to end of consultation'],
-            ['242.8 min', 'of it spent waiting to be called'],
-            ['12.8 min', 'with the doctor — under 5% of the visit'],
+            ['260.4 min', 'mean patient journey, arrival to consultation'],
+            ['242.8 min', 'waiting from arrival to being called'],
+            ['12.8 min', 'the consultation itself — under 5%'],
           ].map(([n, l]) => (
             <div key={n} className="py-6 sm:px-6 first:sm:pl-0">
               <div className="font-pixel text-3xl">{n}</div>
@@ -152,7 +152,7 @@ export function App() {
           ))}
         </div>
         <div className="mx-auto max-w-[1400px] px-4 pb-4 text-[11px] text-mute sm:px-8">
-          Outpatient time-motion data from an Indian government tertiary-care hospital.
+          Kumari K., Int J Community Med Public Health 2026;13(11):6667–71 — government tertiary teaching hospital, North India (patient-reported, n=255).
         </div>
       </div>
 
